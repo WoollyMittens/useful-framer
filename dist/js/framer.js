@@ -52,7 +52,7 @@ var Framer = function (cfg) {
 		left = Math.min(Math.max(left, minLeft), maxLeft);
 		// limit the vertical
 		var minTop = 0;
-		var maxTop = 1;
+		var maxTop = Math.max(1 - 1 / overflow, 0);
 		top = Math.min(Math.max(top, minTop), maxTop);
 		// store the corrected values
 		console.log('left', left, 'top', top, 'size', size);
