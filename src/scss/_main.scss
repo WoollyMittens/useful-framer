@@ -1,0 +1,53 @@
+.framer {
+	background-color: #000;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	display: block;
+	position: relative;
+	overflow: hidden;
+	width: 40rem;
+	height: 40rem;
+	box-sizing: border-box;
+
+	*, *:after, *:before {
+		box-sizing: border-box;
+	}
+
+	img {
+		position: absolute;
+		left: 0;
+		top: 0;
+		transform-origin: left top;
+	}
+
+	figcaption {
+		position: absolute;
+		top: 10%;
+		right: 10%;
+		bottom: 10%;
+		left: 10%;
+		box-shadow: 0 0 10rem 10rem rgba(0,0,0,0.5);
+		padding: 1rem;
+		color: #fff;
+		text-shadow: 0 1px rgba(0,0,0,0.5);
+		border: dashed 2px #fff;
+		overflow: hidden;
+		white-space: nowrap;
+		cursor: grab;
+
+		&:before {
+			display: block;
+			position: absolute;
+			content: "";
+			right: 1rem;
+			bottom: 1rem;
+			width: 2rem;
+			height: 2rem;
+			background-repeat: no-repeat;
+			background-size: contain;
+			background-position: center;
+			background-image: url("../img/move_1.svg");
+		}
+	}
+}

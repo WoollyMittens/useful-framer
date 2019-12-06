@@ -1,0 +1,49 @@
+{
+	"name": "gulp-boilerplate",
+	"version": "0.0.0",
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version",
+			"last 1 ie version"
+		]
+	},
+	"devDependencies": {
+		"canvas": "",
+		"del": "",
+		"exif": "",
+		"fs": "",
+		"gm": "",
+		"gulp": "",
+		"gulp-autoprefixer": "",
+		"gulp-clean": "",
+		"gulp-concat": "",
+		"gulp-connect": "",
+		"gulp-connect-php": "",
+		"gulp-imagemin": "",
+		"gulp-sass": "",
+		"gulp-sourcemaps": "",
+		"gulp-special-html": "",
+		"gulp-uglify": "",
+		"imagemin-pngquant": "",
+		"jsdom": "",
+		"request": "",
+		"xmldom": ""
+	},
+	"dependencies": {
+		"canvas": "^2.6.0",
+		"del": "^5.1.0",
+		"fs": "0.0.2",
+		"gulp": "^4.0.2",
+		"gulp-autoprefixer": "^7.0.1",
+		"gulp-imagemin": "^6.2.0",
+		"imagemin-pngquant": "^8.0.0",
+		"jsdom": "^15.2.1"
+	}
+}
