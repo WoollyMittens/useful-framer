@@ -12,15 +12,15 @@ var Framer = function (cfg) {
 	// PROPERTY
 
 	this.cfg = cfg;
+	this.cfg.frame = cfg.element.querySelector('figcaption');
+	this.cfg.picture = cfg.element.querySelector('img');
 	this.touches = null;
-	this.frame = cfg.element.querySelector('figcaption');
-	this.picture = cfg.element.querySelector('img');
 
 	// METHODS
 
 	this.init = function() {
 		// only proceed if the image has loaded
-		if (!this.picture.offsetHeight) return false;
+		if (!cfg.picture.offsetHeight) return false;
 		// implement the aspect ratio
 		if (cfg.aspect) this.setAspect(cfg.aspect);
 		// implemment the coordinates
@@ -31,15 +31,15 @@ var Framer = function (cfg) {
 		// apply the aspect ratio to the framing indicator
 		var width = Math.min(0.9, cfg.aspect * 0.9);
 		var height = Math.min(0.9, 1 / cfg.aspect * 0.9);
-		this.frame.style.top = ((1 - height) * 50) + '%';
-		this.frame.style.right = ((1 - width) * 50) + '%';
-		this.frame.style.bottom = this.frame.style.top;
-		this.frame.style.left = this.frame.style.right;
+		cfg.frame.style.top = ((1 - height) * 50) + '%';
+		cfg.frame.style.right = ((1 - width) * 50) + '%';
+		cfg.frame.style.bottom = cfg.frame.style.top;
+		cfg.frame.style.left = cfg.frame.style.right;
 	};
 
 	this.limitCoordinates = function(left, top, size) {
 		// calculate the size different between the source image and the target frame
-		var aspect = this.picture.offsetWidth / this.picture.offsetHeight;
+		var aspect = cfg.picture.offsetWidth / cfg.picture.offsetHeight;
 		var overflow = cfg.aspect / aspect;
 		console.log('aspect', aspect, 'overflow', overflow);
 		// limit the size
@@ -65,11 +65,13 @@ var Framer = function (cfg) {
 		// apply the limits
 		this.limitCoordinates(left, top, size);
 		// calculate transformation
-		var z = this.frame.offsetWidth / this.picture.offsetWidth / cfg.size;
-		var x = this.frame.offsetLeft - (cfg.left * this.picture.offsetWidth * z);
-		var y = this.frame.offsetTop - (cfg.top * this.picture.offsetHeight * z);
+		var z = cfg.frame.offsetWidth / cfg.picture.offsetWidth / cfg.size;
+		var x = cfg.frame.offsetLeft - (cfg.left * cfg.picture.offsetWidth * z);
+		var y = cfg.frame.offsetTop - (cfg.top * cfg.picture.offsetHeight * z);
 		// apply the css transformation
-		this.picture.style.transform = 'translate3d(' + x + 'px, ' + y + 'px, 0) scale3d(' + z + ', ' + z + ', 1)';
+		cfg.picture.style.transform = 'translate3d(' + x + 'px, ' + y + 'px, 0) scale3d(' + z + ', ' + z + ', 1)';
+		// report the result
+		this.cfg.output(cfg);
 	};
 
 	this.onTouched = function(evt) {
@@ -143,7 +145,7 @@ var Framer = function (cfg) {
 	cfg.element.addEventListener('mouseout', this.onReleased.bind(this));
 	cfg.element.addEventListener('wheel', this.onWheeled.bind(this));
 
-	this.picture.addEventListener('load', this.init.bind(this));
+	cfg.picture.addEventListener('load', this.init.bind(this));
 	this.init();
 
 };
