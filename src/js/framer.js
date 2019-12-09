@@ -21,6 +21,8 @@ var Framer = function (cfg) {
 	this.init = function() {
 		// only proceed if the image has loaded
 		if (!cfg.picture.offsetHeight) return false;
+		// set the active flag
+		if (!/-active/.test(cfg.element.className)) cfg.element.className += ' framer-active';
 		// implement the aspect ratio
 		if (cfg.aspect) this.setAspect(cfg.aspect);
 		// implemment the coordinates

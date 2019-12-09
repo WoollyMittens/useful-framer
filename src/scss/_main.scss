@@ -1,5 +1,9 @@
 .framer {
 	background-color: #000;
+	background-image: url("../img/busy.svg");
+	background-size: 4rem 4rem;
+	background-repeat: no-repeat;
+	background-position: center center;
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
@@ -19,6 +23,7 @@
 		left: 0;
 		top: 0;
 		transform-origin: left top;
+		visibility: hidden;
 	}
 
 	figcaption {
@@ -48,6 +53,13 @@
 			background-size: contain;
 			background-position: center;
 			background-image: url("../img/move_1.svg");
+		}
+	}
+
+	&-active {
+		background-image: none;
+		img {
+			visibility: visible;
 		}
 	}
 }
