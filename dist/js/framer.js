@@ -152,6 +152,10 @@ var Framer = function (cfg) {
 		if (this.cfg.output) this.cfg.output(cfg);
 	};
 
+	/* TODO: cropImage(type) - returns base 64 encoded JPEG or PNG from a canvas operation */
+
+	/* TODO: loadImage(url) - loads a new image into the editor */
+
 	this.onTouched = function(evt) {
 		// store the interactions
 		this.touches = evt.touches || [evt];

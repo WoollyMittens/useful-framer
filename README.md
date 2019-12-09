@@ -61,8 +61,6 @@ var framer = new Framer({
 
 ## How to control the script
 
-
-
 ### setCoordinates
 
 Preset a crop setting.
@@ -165,6 +163,16 @@ image = framer.cropImage(type);
 **type : {String}** - JPEG or PNG.
 
 **image : {String}** - A base 64 Encoded JPEG or PNG.
+
+### cropImage
+
+TODO: Loads a new image into the editor.
+
+```javascript
+framer.cropImage(url);
+```
+
+**url : {String}** - The path of an image to load into the editor.
 
 ## How to build the script
 
