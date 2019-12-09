@@ -24,19 +24,22 @@ var Framer = function (cfg) {
 		// set the active flag
 		if (!/-active/.test(cfg.element.className)) cfg.element.className += ' framer-active';
 		// implement the aspect ratio
-		if (cfg.aspect) this.setAspect(cfg.aspect);
-		// implemment the coordinates
-		this.centerCoordinates(cfg.left, cfg.top, cfg.size);
+		this.setAspect(
+			cfg.aspect || 1
+		);
 	};
 
 	this.setAspect = function(aspect) {
 		// apply the aspect ratio to the framing indicator
-		var width = Math.min(0.9, cfg.aspect * 0.9);
-		var height = Math.min(0.9, 1 / cfg.aspect * 0.9);
+		var width = Math.min(0.9, aspect * 0.9);
+		var height = Math.min(0.9, 1 / aspect * 0.9);
+		cfg.aspect = aspect;
 		cfg.frame.style.top = ((1 - height) * 50) + '%';
 		cfg.frame.style.right = ((1 - width) * 50) + '%';
 		cfg.frame.style.bottom = cfg.frame.style.top;
 		cfg.frame.style.left = cfg.frame.style.right;
+		// centre the image inside the framing indicator
+		this.centerCoordinates(cfg.left, cfg.top, cfg.size);
 	};
 
 	this.centerCoordinates = function(left, top, size) {
@@ -123,12 +126,12 @@ var Framer = function (cfg) {
 	};
 
 	this.zoomIn = function(amount) {
-		amount = amount || 0.9;
+		amount = amount || 1.1;
 		var offset =  (1 - amount) / 4;
 		this.setCoordinates(
 			cfg.left + offset,
 			cfg.top + offset,
-			cfg.size * amount
+			cfg.size / amount
 		);
 	};
 
@@ -152,9 +155,39 @@ var Framer = function (cfg) {
 		if (this.cfg.output) this.cfg.output(cfg);
 	};
 
-	/* TODO: cropImage(type) - returns base 64 encoded JPEG or PNG from a canvas operation */
+	this.loadImage = function(url) {
+		cfg.picture.src = url;
+	};
 
-	/* TODO: loadImage(url) - loads a new image into the editor */
+	this.cropImage = function(type, quality) {
+		var aspect = cfg.picture.offsetWidth / cfg.picture.offsetHeight;
+		var width = cfg.picture.naturalWidth;
+		var height = cfg.picture.naturalHeight;
+		// create the canvas
+		var canvas = document.createElement('canvas');
+		canvas.className = 'framer-canvas';
+		canvas.width = width * cfg.size;
+		canvas.height = width * cfg.size / cfg.aspect;
+		document.body.appendChild(canvas);
+		// fill the canvas
+		var context = canvas.getContext('2d');
+		context.drawImage(
+			cfg.picture,
+			// source
+			width * cfg.left,
+			height * cfg.top,
+			width * cfg.size,
+			width * cfg.size / cfg.aspect,
+			// target
+			0, 0, canvas.width, canvas.height
+		);
+		// export the canvas
+		return canvas.toDataURL(
+			// image/png || image/jpeg || image/webp
+			type || 'image/png',
+			quality || 0.92
+		);
+	};
 
 	this.onTouched = function(evt) {
 		// store the interactions

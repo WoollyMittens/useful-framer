@@ -2,10 +2,19 @@
   text-align: center;
   margin: 1rem 0;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-around;
   p {}
   button {
     margin: 0.1rem;
   }
+}
+.framer-canvas {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  width: 25%;
+  height: auto;
+  display: block;
+  border: dashed 2px red;
 }

@@ -44,16 +44,27 @@
 
 				<div class="framer-example">
 					<p>
-						<button onclick="framer.moveUp()">Up</button><br/>
-						<button onclick="framer.moveLeft()">Left</button><button onclick="framer.moveRight()">Right</button><br/>
-						<button onclick="framer.moveDown()">Down</button><br/>
+						<button onclick="framer.moveUp(0.1)">Up</button><br/>
+						<button onclick="framer.moveLeft(0.1)">Left</button><button onclick="framer.moveRight(0.1)">Right</button><br/>
+						<button onclick="framer.moveDown(0.1)">Down</button><br/>
 					</p>
 					<p>
-						<button onclick="framer.zoomIn()">Zoom in</button><br/>
-						<button onclick="framer.zoomOut()">Zoom out</button><br/>
-					</p>
-					<p>
+						<button onclick="framer.zoomIn(1.1)">Zoom in</button><br/>
+						<button onclick="framer.zoomOut(0.9)">Zoom out</button><br/>
 						<button onclick="framer.resetAll()">Reset</button><br/>
+					</p>
+					<p>
+						<select onchange="framer.loadImage(this.value)">
+							<option value="./img/photo_portrait.jpg">Image A</option>
+							<option value="./img/photo_landscape.jpg">Image B</option>
+							<option value="./img/photo_square.jpg">Image C</option>
+						</select><br/>
+						<select onchange="framer.setAspect(parseFloat(this.value))">
+							<option value="1.333">Landscape</option>
+							<option value="0.75">Portrait</option>
+							<option value="1.0">Square</option>
+						</select><br/>
+						<button onclick="console.log(framer.cropImage('image/jpeg', 0.7))">Export image</button><br/>
 					</p>
 				</div>
 

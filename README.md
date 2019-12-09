@@ -154,25 +154,37 @@ values = framer.reportValues();
 
 ### cropImage
 
-TODO: Returns the cropped image as a JPEG or a PNG.
+Returns the cropped image as a base64 Encoded image.
 
 ```javascript
-image = framer.cropImage(type);
+image = framer.cropImage(type, quality);
 ```
 
-**type : {String}** - JPEG or PNG.
+**type : {String}** - The image format, "image/png" or "image/jpeg" or "image/webp".
 
-**image : {String}** - A base 64 Encoded JPEG or PNG.
+**quality : {Float}** - The quality option of lossy formats between 0 and 1.
 
-### cropImage
+**image : {String}** - A base64 Encoded image.
 
-TODO: Loads a new image into the editor.
+### loadImage
+
+Loads a new image into the editor.
 
 ```javascript
-framer.cropImage(url);
+framer.loadImage(url);
 ```
 
 **url : {String}** - The path of an image to load into the editor.
+
+### setAspect
+
+Sets the desired aspect ratio.
+
+```javascript
+framer.setAspect(aspect);
+```
+
+**aspect : {Fraction}** - The desired aspect ratio of the framed image.
 
 ## How to build the script
 
