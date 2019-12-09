@@ -2,7 +2,7 @@
 
 A visual touch interface for generating framing coordinates.
 
-*Incomplete: Work in progress.*
+Try the <a href="http://www.woollymittens.nl/default.php?url=useful-framer">demo</a>.
 
 ## How to include the script
 
