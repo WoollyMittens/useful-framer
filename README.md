@@ -42,21 +42,129 @@ var framer = new Framer({
 	'aspect': 4/3,
 	'left': 0,
 	'top': 0,
-	'size': 1
+	'size': 1,
+	'output': function(result) {}
 });
 ```
 
-**element : {DOM Object}** - Lorem ipsum dolor sit amet.
+**element : {DOM Object}** - The container of the image to be affected.
+
+**aspect : {Fraction}** - The desired aspect ratio of the framed image.
+
+**left : {Float}** - Starting position between the left (0) or right (1).
+
+**top : {Float}** - Starting position between the top (0) or bottom (1).
+
+**size : {Float}** - Starting visible fraction of the image. (e.g. 0.5 would start the image twice as large as the frame).
+
+**output : {Function}** - Function that receives the framing coordinates.
 
 ## How to control the script
 
-### Update
 
-```javascript
-cropper.update({left:0.1, top:0.2, right:0.7, bottom:0.6});
-```
+
+### setCoordinates
 
 Preset a crop setting.
+
+```javascript
+framer.setCoordinates(left, top, size);
+```
+**left : {Float}** - Starting position between the left (0) or right (1).
+
+**top : {Float}** - Starting position between the top (0) or bottom (1).
+
+**size : {Float}** - Starting visible fraction of the image. (e.g. 0.5 would start the image twice as large as the frame).
+
+### moveLeft
+
+Move the framed area to the left.
+
+```javascript
+framer.moveLeft(amount);
+```
+**amount : {Float}** - Optionally a fraction of the image width to move.
+
+### moveRight
+
+Move the framed area to the right.
+
+```javascript
+framer.moveRight(amount);
+```
+**amount : {Float}** - Optionally a fraction of the image width to move.
+
+### moveUp
+
+Move the framed area up.
+
+```javascript
+framer.moveUp(amount);
+```
+**amount : {Float}** - Optionally a fraction of the image height to move.
+
+### moveDown
+
+Move the framed area down.
+
+```javascript
+framer.moveDown(amount);
+```
+**amount : {Float}** - Optionally a fraction of the image height to move.
+
+### zoomIn
+
+Zoom the frame in.
+
+```javascript
+framer.zoomIn(factor);
+```
+**factor : {Float}** - Optionally a factor to zoom in.
+
+### zoomOut
+
+Zoom the frame out.
+
+```javascript
+framer.zoomOut(factor);
+```
+**factor : {Float}** - Optionally a factor to zoom out.
+
+### resetAll
+
+Reset the frame to the centre.
+
+```javascript
+framer.resetAll();
+```
+
+### reportValues
+
+Reports the framed coordinated back in an object.
+
+```javascript
+values = framer.reportValues();
+```
+
+**values : {Object}** - An object containing the frame settings.
+
+- **left : {Float}** - Horizontal position between the left (0) or right (1).
+
+- **top : {Float}** - Vertical position between the top (0) or bottom (1).
+
+- **size : {Float}** - Framed fraction of the image. (e.g. 0.5 means half the image).
+
+### cropImage
+
+TODO: Returns the cropped image as a JPEG or a PNG.
+
+```javascript
+image = framer.cropImage(type);
+```
+
+**type : {String}** - JPEG or PNG.
+
+**image : {String}** - A base 64 Encoded JPEG or PNG.
 
 ## How to build the script
 

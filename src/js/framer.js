@@ -24,7 +24,7 @@ var Framer = function (cfg) {
 		// implement the aspect ratio
 		if (cfg.aspect) this.setAspect(cfg.aspect);
 		// implemment the coordinates
-		this.setCoordinates(cfg.left, cfg.top, cfg.size);
+		this.centerCoordinates(cfg.left, cfg.top, cfg.size);
 	};
 
 	this.setAspect = function(aspect) {
@@ -37,25 +37,35 @@ var Framer = function (cfg) {
 		cfg.frame.style.left = cfg.frame.style.right;
 	};
 
+	this.centerCoordinates = function(left, top, size) {
+		// calculate the size different between the source image and the target frame
+		var aspect = cfg.picture.offsetWidth / cfg.picture.offsetHeight;
+		var overflow = cfg.aspect / aspect;
+		// center the values
+		this.setCoordinates(
+			(left === undefined) ? Math.max(1 - overflow, 0) / 2 : left,
+			(top === undefined) ? Math.max(1 - 1 / overflow, 0) / 2 : top,
+			(size === undefined) ? 1 : size
+		);
+	};
+
 	this.limitCoordinates = function(left, top, size) {
 		// calculate the size different between the source image and the target frame
 		var aspect = cfg.picture.offsetWidth / cfg.picture.offsetHeight;
 		var overflow = cfg.aspect / aspect;
-		console.log('aspect', aspect, 'overflow', overflow);
 		// limit the size
 		var minSize = 0.25;
 		var maxSize = Math.min(overflow, 1);
 		size = Math.min(Math.max(size, minSize), maxSize);
 		// limit the horizontal
 		var minLeft = 0;
-		var maxLeft = Math.max(1 - overflow, 0);
+		var maxLeft = Math.max(1 - size, 0);
 		left = Math.min(Math.max(left, minLeft), maxLeft);
 		// limit the vertical
 		var minTop = 0;
-		var maxTop = Math.max(1 - 1 / overflow, 0);
+		var maxTop = Math.max(1 - size / overflow, 0);
 		top = Math.min(Math.max(top, minTop), maxTop);
 		// store the corrected values
-		console.log('left', left, 'top', top, 'size', size);
 		cfg.left = left;
 		cfg.top = top;
 		cfg.size = size;
@@ -71,7 +81,73 @@ var Framer = function (cfg) {
 		// apply the css transformation
 		cfg.picture.style.transform = 'translate3d(' + x + 'px, ' + y + 'px, 0) scale3d(' + z + ', ' + z + ', 1)';
 		// report the result
-		this.cfg.output(cfg);
+		this.reportValues();
+	};
+
+	this.moveLeft = function(amount) {
+		amount = amount || 0.1;
+		this.setCoordinates(
+			cfg.left - amount,
+			cfg.top,
+			cfg.size
+		);
+	};
+
+	this.moveRight = function(amount) {
+		amount = amount || 0.1;
+		this.setCoordinates(
+			cfg.left + amount,
+			cfg.top,
+			cfg.size
+		);
+	};
+
+	this.moveUp = function(amount) {
+		amount = amount || 0.1;
+		this.setCoordinates(
+			cfg.left,
+			cfg.top - amount,
+			cfg.size
+		);
+	};
+
+	this.moveDown = function(amount) {
+		amount = amount || 0.1;
+		this.setCoordinates(
+			cfg.left,
+			cfg.top + amount,
+			cfg.size
+		);
+	};
+
+	this.zoomIn = function(amount) {
+		amount = amount || 0.9;
+		var offset =  (1 - amount) / 4;
+		this.setCoordinates(
+			cfg.left + offset,
+			cfg.top + offset,
+			cfg.size * amount
+		);
+	};
+
+	this.zoomOut = function(amount) {
+		amount = amount || 0.9;
+		var offset =  (1 - amount) / 4;
+		this.setCoordinates(
+			cfg.left - offset,
+			cfg.top - offset,
+			cfg.size / amount
+		);
+	};
+
+	this.resetAll = function() {
+		// recentre
+		this.centerCoordinates();
+	};
+
+	this.reportValues = function() {
+		// TODO: add dpi, pixel values, etc.
+		if (this.cfg.output) this.cfg.output(cfg);
 	};
 
 	this.onTouched = function(evt) {
