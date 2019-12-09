@@ -24,9 +24,7 @@ var Framer = function (cfg) {
 		// set the active flag
 		if (!/-active/.test(cfg.element.className)) cfg.element.className += ' framer-active';
 		// implement the aspect ratio
-		this.setAspect(
-			cfg.aspect || 1
-		);
+		this.setAspect(cfg.aspect || 1);
 	};
 
 	this.setAspect = function(aspect) {
@@ -127,17 +125,17 @@ var Framer = function (cfg) {
 
 	this.zoomIn = function(amount) {
 		amount = amount || 1.1;
-		var offset =  (1 - amount) / 4;
+		var offset =  (1 - amount) / 2;
 		this.setCoordinates(
-			cfg.left + offset,
-			cfg.top + offset,
+			cfg.left - offset,
+			cfg.top - offset,
 			cfg.size / amount
 		);
 	};
 
 	this.zoomOut = function(amount) {
 		amount = amount || 0.9;
-		var offset =  (1 - amount) / 4;
+		var offset =  (1 - amount) / 2;
 		this.setCoordinates(
 			cfg.left - offset,
 			cfg.top - offset,
@@ -156,7 +154,18 @@ var Framer = function (cfg) {
 	};
 
 	this.loadImage = function(url) {
+		// disable the component
+		cfg.element.className = cfg.element.className.replace(/framer-active/g, '');
+		// update the image url
 		cfg.picture.src = url;
+	};
+
+	this.updateAspect = function(aspect) {
+		// update the image url
+		delete(cfg.left);
+		delete(cfg.top);
+		delete(cfg.size);
+		this.setAspect(aspect);
 	};
 
 	this.cropImage = function(type, quality) {
@@ -208,8 +217,8 @@ var Framer = function (cfg) {
 					dY = vertical / cfg.element.offsetHeight;
 					dZ = cfg.size;
 					this.setCoordinates(
-						cfg.left + dX / 4 * dZ,
-						cfg.top + dY / 4 * dZ,
+						cfg.left + dX / 2 * dZ,
+						cfg.top + dY / 2 * dZ,
 						cfg.size - dX - dY
 					);
 					break;
@@ -241,8 +250,8 @@ var Framer = function (cfg) {
 		var dY = evt.deltaY / cfg.element.offsetHeight;
 		var dZ = cfg.size;
 		this.setCoordinates(
-			cfg.left + dX / 4 * dZ,
-			cfg.top + dY / 4 * dZ,
+			cfg.left + dX / 2 * dZ,
+			cfg.top + dY / 2 * dZ,
 			cfg.size - dY
 		);
 
